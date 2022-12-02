@@ -5,15 +5,11 @@ import Debug.Trace
 
 contiguousRows : Parser (List Integer)
 contiguousRows =
-  some (do v <- integer
-           skip $ char '\n'
-           pure v)
+  some (integer <* char '\n')
 
 parseFile : Parser (List (List Integer))
 parseFile =
-  some (do contig <- contiguousRows
-           eos <|> (skip $ char '\n')
-           pure contig)
+  some (contiguousRows <* (eos <|> (skip $ char '\n')))
 
 findMax : List (List Integer) -> Integer
 findMax rows = foldl pickAccOrSum 0 rows
