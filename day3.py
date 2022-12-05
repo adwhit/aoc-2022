@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-total = 0
 with open("day3.data") as f:
     rows = list(l.strip() for l in f)
 
@@ -10,6 +9,7 @@ def priority(val):
     else:
         return ord(val) - ord("a") + 1
 
+total = 0
 for line in rows:
     left = set(line[:len(line)//2])
     right = set(line[len(line)//2:])
