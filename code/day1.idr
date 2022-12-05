@@ -27,7 +27,7 @@ findMax3 rows = sum top3
 
 main : IO ()
 main = do
-   Right input <- readFile "day1.data"
+   Right input <- readFile "../data/day1.data"
          | Left err => printLn err
    case parse parseFile input of
      Right rows => do

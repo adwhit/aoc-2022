@@ -1,6 +1,6 @@
 total = 0
 total2 = 0
-with open("day4.data") as f:
+with open("../data/day4.data") as f:
     for row in f:
         row = row.strip()
         [l, r] = row.split(',')

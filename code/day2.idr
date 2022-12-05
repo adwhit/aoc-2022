@@ -68,7 +68,7 @@ scoreRound2 l r = scoreRound l $ getIndicatedMove l r
 
 main : IO ()
 main = do
-   Right input <- readFile "day2.data"
+   Right input <- readFile "../data/day2.data"
          | Left err => printLn err
    case parse (parseFile getMoveR) input of
      Right rows => do

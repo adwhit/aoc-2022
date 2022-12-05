@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-with open("day3.data") as f:
+with open("../data/day3.data") as f:
     rows = list(l.strip() for l in f)
 
 def priority(val):

@@ -51,7 +51,7 @@ part2 lines = part2' lines $ Just 0
 
 main : IO ()
 main = do
-  Right input <- readFile "day3.data"
+  Right input <- readFile "../data/day3.data"
     | Left err => printLn err
   case part1 $ lines input of
     Just score => printLn score

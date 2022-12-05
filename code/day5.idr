@@ -93,7 +93,7 @@ showStack stack =
 
 main : IO ()
 main = do
-   Right input <- readFile "day5.data"
+   Right input <- readFile "../data/day5.data"
          | Left err => printLn err
    case parse parseFile input of
      Right (input, _) => do
