@@ -44,8 +44,7 @@ mkCrateStack stack =
 parseFile : Parser Input
 parseFile = do
   theCrates <- crateRows
-  (sepBy1 (space *> digit *> space) space) $> ()
-  newLine
+  (sepBy1 (space *> digit *> space) space) *> newLine
   newLine
   moves <- some $ moveRow <* newLine
   eos
@@ -56,24 +55,28 @@ Place = List Char -> List Char -> Integer -> (List Char, List Char)
 placeN1 : List Char -> List Char -> Integer -> (List Char, List Char)
 placeN1 from to 0 = (from, to)
 placeN1 (take::rest) to qty = placeN1 rest (take::to) (qty - 1)
-placeN1 [] to qty = ([], to)
+placeN1 [] to qty = ?unreachable1
 
 placeN2 : List Char -> List Char -> Integer -> List Char -> (List Char, List Char)
 placeN2 from to 0 acc = (from, (reverse acc) ++ to)
 placeN2 (take::rest) to qty acc = placeN2 rest to (qty - 1) (take::acc)
-placeN2 [] to qty acc = ?err
+placeN2 [] to qty acc = ?unreachable
 
 replaceAt : List a -> Nat -> a -> List a
 replaceAt (x::rest) (S n) val = x :: replaceAt rest n val
 replaceAt (_::rest) Z val = val :: rest
 replaceAt [] _ _ = []
 
+unwrap : Maybe a -> a
+unwrap (Just v) = v
+unwrap Nothing = ?hole
+
 applyMove : Place -> List (List Char) -> (Integer, Fin 10, Fin 10) -> List (List Char)
 applyMove placeN stacks (qty, from, to) =
   let fromIx = cast (from - 1)
       toIx = cast (to - 1)
-      fromStack = fromMaybe empty $ getAt fromIx stacks
-      toStack = fromMaybe empty $ getAt toIx stacks
+      fromStack = unwrap $ getAt fromIx stacks
+      toStack = unwrap $ getAt toIx stacks
       (newFrom, newTo) = placeN fromStack toStack qty
       newStack1 = replaceAt stacks fromIx newFrom
       newStack2 = replaceAt newStack1 toIx newTo
