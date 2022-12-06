@@ -27,7 +27,7 @@ isContained (ll, lr) (rl, rr) =
 
 isOverlapping : Span -> Span -> Bool
 isOverlapping (ll, lr) (rl, rr) =
-  not ((ll < rl && lr < rl) || (rl < ll && rr < ll))
+  not ((lr < rl) || (rr < ll))
 
 main : IO ()
 main = do
